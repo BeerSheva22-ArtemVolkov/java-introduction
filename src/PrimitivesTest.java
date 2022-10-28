@@ -28,8 +28,35 @@ class PrimitivesTest {
 		assertEquals(3, getThirdDigit(number));
 		
 	}
-	private int getFirstDigit(int number) {return number = number / 100;};
-	private int getSecondDigit(int number) {return number = number / 10 % 10;};
-	private int getThirdDigit(int number) {return number = number % 10;};
+	private int getFirstDigit(int number) {
+		return number = number / 100;
+	};
+	private int getSecondDigit(int number) {
+		return number = number / 10 % 10;
+	};
+	private int getThirdDigit(int number) {
+		return number = number % 10;
+	};
 	
+	@Test
+	void getBitValueTest() {				   
+		long number = 0x3ab7f5; //0011_1010_1011_0111_1111_0101
+		assertEquals(1, BitOperations.getBitValue(number, 4));
+		assertEquals(-1, BitOperations.getBitValue(number, 100));
+		assertEquals(-1, BitOperations.getBitValue(number, -2));
+	}
+	
+	@Test
+	void setBitValueTest () {
+		long number = 0x3ab7f5; //0011_1010_1011_0111_1111_0101
+		assertEquals(0x3ab7e5, BitOperations.setBitValue(number, 4, false));
+		assertEquals(0x3ab7f5, BitOperations.setBitValue(number, 4, true));
+	}
+	
+	@Test
+	void revertBitValueTest () {
+		long number = 0x3ab7f5; //0011_1010_1011_0111_1111_0101
+		assertEquals(0x3ab7e5, BitOperations.revertBitValue(number, 4));
+		assertEquals(0x3ab7f4, BitOperations.revertBitValue(number, 0));
+	}
 }
