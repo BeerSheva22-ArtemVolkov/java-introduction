@@ -70,18 +70,30 @@ class PrimitivesTest {
 		assertEquals(0x3ab7f4, BitOperations.invertBitValue(number, 0));
 	}
 	
+	
 	@Test
 	void digitsNumberTest() {
-		//TODO
+		long number = 12351364626123L;
+		assertEquals(14, Numbers.getNdigits(number));
+		number = 123;
+		assertEquals(3, Numbers.getNdigits(number));
 	}
+	
 	
 	@Test
 	void leadingZerosTest() {
-		//TODO
+		long number = 0x3ab7f5; //0011_1010_1011_0111_1111_0101
+		assertEquals(42, Numbers.leadingZeros(number));
+		number = 1;
+		assertEquals(2, Numbers.getNdigits(number));
 	}
+	
 	
 	@Test
 	void isHappyNumberTest() {
-		//TODO
+		int number = 343811;
+		assertEquals(true, Numbers.isHappyNumber(number));
+		number = 143822;
+		assertEquals(false, Numbers.isHappyNumber(number));
 	}
 }

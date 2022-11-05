@@ -29,7 +29,7 @@ public class BitOperations {
 		return res;
 	}
 
-	private static long getMask(int nBit) {
+	public static long getMask(int nBit) {
 		return 1L << nBit;
 	}
 	

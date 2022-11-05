@@ -7,15 +7,24 @@ public class SportLotoAppl {
 	 * no additional collections/arrays
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//System.out.print(100 + " " + 200);
+		int n1 = 0, n2 = 0, n3 = 0, n4 = 0, n5 = 0, n6 = 0, res;
 		for (int i = 0; i < 6; i++) {
-			System.out.print(getRandomInt(1, 49)+ " ");
-		}
-		
+			res = getRandomInt(1, 49, n1, n2, n3, n4, n5, n6);
+			if (i == 0) {n1 = res;}
+			if (i == 1) {n2 = res;}
+			if (i == 2) {n3 = res;}
+			if (i == 3) {n4 = res;}
+			if (i == 4) {n5 = res;}
+			if (i == 5) {n6 = res;}
+			System.out.print(res+ " ");
+		}		
 	}
 	
-	public static int getRandomInt(int min, int max) {
-		return (int)((min + Math.random() * (max - min)));
+	public static int getRandomInt(int min, int max, int n1, int n2, int n3, int n4, int n5, int n6) {
+		int res = 0;
+		do {
+			res = (int)((min + Math.random() * (max - min + 1)));
+		} while ((res == n1) || (res == n2) || (res == n3) || (res == n4) || (res == n5) || (res == n6));
+		return res;
 	}
 }
