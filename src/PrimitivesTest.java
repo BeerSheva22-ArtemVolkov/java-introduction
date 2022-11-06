@@ -88,7 +88,7 @@ class PrimitivesTest {
 		assertEquals(2, Numbers.getNdigits(number));
 	}
 	
-	
+	@Disabled
 	@Test
 	void isHappyNumberTest() {
 		int number = 343811;
