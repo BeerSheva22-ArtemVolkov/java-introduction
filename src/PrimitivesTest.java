@@ -70,7 +70,7 @@ class PrimitivesTest {
 		assertEquals(0x3ab7f4, BitOperations.invertBitValue(number, 0));
 	}
 	
-	
+	@Disabled
 	@Test
 	void digitsNumberTest() {
 		long number = 12351364626123L;
@@ -79,7 +79,7 @@ class PrimitivesTest {
 		assertEquals(3, Numbers.getNdigits(number));
 	}
 	
-	
+	@Disabled
 	@Test
 	void leadingZerosTest() {
 		long number = 0x3ab7f5; //0011_1010_1011_0111_1111_0101
@@ -91,9 +91,49 @@ class PrimitivesTest {
 	@Disabled
 	@Test
 	void isHappyNumberTest() {
-		int number = 343811;
-		assertEquals(true, Numbers.isHappyNumber(number));
-		number = 143822;
-		assertEquals(false, Numbers.isHappyNumber(number));
+		int expectedTrue = 343811;
+		int expectedFalse = 143822;
+		assertTrue(Numbers.isHappyNumber(expectedTrue));		
+		assertFalse(Numbers.isHappyNumber(expectedFalse));
+	}
+	
+	@Disabled
+	@Test
+	void getDigitsTest() {
+		int expected[] = {1,2,3,4};
+		assertArrayEquals(expected, Numbers.getDigits(1234));
+	}
+	
+	@Disabled
+	@Test
+	void getNumberFromDigitsTest() {
+		int expectedNumber = 1234;
+		assertEquals(expectedNumber, Numbers.getNumberFromDigits(new int[] {1,2,3,4}));
+	}
+	
+	@Disabled
+	@Test
+	void IsraelIdentityTest() {
+		int expectedTrue = 584216485;
+		int expectedFalse = 143822;
+		assertTrue(IsraelIdentity.verify(expectedTrue));	
+		assertFalse(IsraelIdentity.verify(expectedFalse));
+		expectedTrue = IsraelIdentity.generateRandom();
+		assertTrue(IsraelIdentity.verify(expectedTrue));
+	}
+	
+	
+	@Test
+	void MyArrayTest() {
+		assertArrayEquals(new int[] {5,7,8,4,3,9,1,0,5,4,22}, MyArrays.addsNumber(new int[] {5,7,8,4,3,9,1,0,5,4}, 22));
+		
+		assertArrayEquals(new int[] {7,8,4,3,9,1,0,5,4}, MyArrays.removeNumber(new int[] {5,7,8,4,3,9,1,0,5,4}, 0));
+		
+		assertArrayEquals(new int[] {5,7,8,4,3,1,0,5,4}, MyArrays.removeNumber(new int[] {5,7,8,4,3,9,1,0,5,4}, 5));
+		
+		assertArrayEquals(new int[] {5,10,20,30,40,50,60,70}, MyArrays.insertSorted(new int[] {10,20,30,40,50,60,70}, 5));
+		
+		assertArrayEquals(new int[] {10,20,30,40,50,55,60,70}, MyArrays.insertSorted(new int[] {10,20,30,40,50,60,70}, 55));
+		
 	}
 }
