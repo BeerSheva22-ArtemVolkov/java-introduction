@@ -14,21 +14,24 @@ public class IsraelIdentity {
 	 *         (6*2=12=>1+2) + 7 + 7 (8*2=16=>1+6) + 2 = 40 => true
 	 */
 	public static boolean verify(int id) {
+		
+		int[] numArray = Numbers.getDigits(id);
 		boolean res = false;
-		if (Numbers.getNdigits(id) == N_OF_DIGITS) {
-			int sum = 0;
-			int[] numArray = Numbers.getDigits(id);
-			for (int i = 0; i < numArray.length; i++) {
-				// System.out.println(array[i]);
-				if (i % 2 == 0) {
-					sum += numArray[i];
-				} else if (numArray[i] * 2 > 9) {
-					sum += (numArray[i] * 2) / 10 + (numArray[i] * 2) % 10;
-				} else {
-					sum += numArray[i] * 2;
+		if (id > 0) {
+			if (numArray.length == N_OF_DIGITS) {
+				int sum = 0;
+				for (int i = 0; i < numArray.length; i++) {
+					// System.out.println(array[i]);
+					if (i % 2 == 0) {
+						sum += numArray[i];
+					} else if (numArray[i] * 2 > 9) {
+						sum += (numArray[i] * 2) / 10 + (numArray[i] * 2) % 10;
+					} else {
+						sum += numArray[i] * 2;
+					}
 				}
+				res = (sum % 10 == 0) ? true : false;
 			}
-			res = (sum % 10 == 0) ? true : false;
 		}
 		return res;
 	}
@@ -39,21 +42,69 @@ public class IsraelIdentity {
 	 *         than 9 iterations
 	 */
 	public static int generateRandom() {
-		Random rand = new Random();
-		int res = rand.nextInt(9) + 1, randNum;
-		int sum = res;
-		for (int i = 1; i < N_OF_DIGITS - 1; i++) {	
-			randNum = rand.nextInt(10);
-			if (i % 2 == 0) {
-				sum += randNum;
-			} else if (randNum * 2 > 9) {
-				sum = sum + (randNum * 2) / 10 + (randNum * 2) % 10;
-			} else {
-				sum = sum + randNum * 2;
-			}
-			res = res * 10 + randNum;
+//		Random rand = new Random();
+//		int res = rand.nextInt(9) + 1, randNum;
+//		int sum = res;
+//		for (int i = 1; i < N_OF_DIGITS - 1; i++) {	
+//			randNum = rand.nextInt(10);
+//			if (i % 2 == 0) {
+//				sum += randNum;
+//			} else if (randNum * 2 > 9) {
+//				sum = sum + (randNum * 2) / 10 + (randNum * 2) % 10;
+//			} else {
+//				sum = sum + randNum * 2;
+//			}
+//			res = res * 10 + randNum;
+//		}
+//		res = res * 10 + (int)Math.ceil((double)sum / 10) * 10 - sum;
+//		return res;
+		int[] digits = new int [N_OF_DIGITS - 1];
+		fillRandomDigits(digits);
+		int controlSum = getControlSum(digits);
+		int lastDigit = getLastDigit(controlSum);
+		int res = Numbers.getNumberFromDigits(digits);
+		res = res * 10 + lastDigit;
+		return res;
+	}
+	
+	private static int getLastDigit(int controlSum) {
+		int rem = controlSum % 10;
+		int res = 0;
+		if (rem != 0 ) {
+			res = 10 - rem;
 		}
-		res = res * 10 + (int)Math.ceil((double)sum / 10) * 10 - sum;
+		return res;
+	}
+
+	private static void fillRandomDigits(int[] digits) {
+		digits[0] = (int) Numbers.getRandomNumber(1,9);
+		for (int i = 1; i < digits.length; i++) {
+			digits[i] = (int) Numbers.getRandomNumber(0,9);
+		}
+	}
+
+	private static int getControlSum (int[] digits) {
+		return sumEvenIndexes(digits) + sumOddIndexes(digits);
+	}
+
+	private static int sumOddIndexes(int[] digits) {
+		int res = 0;
+		for (int i = 1; i < digits.length; i += 2) {
+			int digit = digits[i] * 2;
+			if (digit > 9) {
+				digit -= 9;
+			}
+			res += digit;
+		}
+		return res;
+	}
+
+	private static int sumEvenIndexes(int[] digits) {
+		int res = 0;
+		for (int i = 0; i < digits.length; i += 2) {
+			int digit = digits[i] * 2;
+			res += digit;
+		}
 		return res;
 	}
 }

@@ -122,7 +122,7 @@ class PrimitivesTest {
 		assertTrue(IsraelIdentity.verify(expectedTrue));
 	}
 	
-	
+	@Disabled
 	@Test
 	void MyArrayTest() {
 		assertArrayEquals(new int[] {5,7,8,4,3,9,1,0,5,4,22}, MyArrays.addsNumber(new int[] {5,7,8,4,3,9,1,0,5,4}, 22));
@@ -134,6 +134,54 @@ class PrimitivesTest {
 		assertArrayEquals(new int[] {5,10,20,30,40,50,60,70}, MyArrays.insertSorted(new int[] {10,20,30,40,50,60,70}, 5));
 		
 		assertArrayEquals(new int[] {10,20,30,40,50,55,60,70}, MyArrays.insertSorted(new int[] {10,20,30,40,50,60,70}, 55));
-		
+	}
+	
+	@Disabled
+	@Test
+	void ArraysSearchTest() {
+		MyArrays.binarySearchDuplicate(new int[] {4, 5, 7, 9, 9, 9, 9, 13, 13, 18, 22, 26, 29, 44, 59}, 9);
+	}
+
+	@Test
+	void isOneSwapTestFalse() {
+		int ar1[] = { 1, 2, 3, 10, -1, 5, 6 };
+		int ar2[] = { 1, 2, 3, 4, 5, 10 };
+		int ar3[] = { 5, 1, 2, 4, 6, 10 };
+		int ar4[] = { 1, 5, 2, 4, 3, 10 };
+		int ar5[] = { 1, 3, 2, 5, 4, 10, 8 };
+		int ar6[] = { 1, 3, 20, 4, 5, 6, 10};
+		int ar7[] = { 1, 3, 20, 4, 5, 11, 2};
+		assertFalse(MyArrays.isOneSwapForSorted(ar1));
+		assertFalse(MyArrays.isOneSwapForSorted(ar2));
+		assertFalse(MyArrays.isOneSwapForSorted(ar3));
+		assertFalse(MyArrays.isOneSwapForSorted(ar4));
+		assertFalse(MyArrays.isOneSwapForSorted(ar5));
+		assertFalse(MyArrays.isOneSwapForSorted(ar6));
+		assertFalse(MyArrays.isOneSwapForSorted(ar7));
+	}
+	
+	@Test
+	void isOneSwapTestTrue() {
+		int ar1[] = { 10, 2, 3, 4, 1 };
+		int ar2[] = { 1, 2, 4, 3, 5, 10 };
+		int ar3[] = { 1, 2, 3, 10, 5, 4 };
+		int	ar4[] = { 1, 5, 3, 4, 2, 10 };
+		int ar5[] = { 1, 2, 3, 4, 10, 5 };
+		int ar6[] = { 2, 1, -3, 4, 5, 10 };
+		int ar7[] = { 3, 2, 1, 4, 5, 6 };
+		assertTrue(MyArrays.isOneSwapForSorted(ar1));
+		assertTrue(MyArrays.isOneSwapForSorted(ar2));
+		assertTrue(MyArrays.isOneSwapForSorted(ar3));
+		assertTrue(MyArrays.isOneSwapForSorted(ar4));
+		assertTrue(MyArrays.isOneSwapForSorted(ar5));
+		assertTrue(MyArrays.isOneSwapForSorted(ar6));
+		assertTrue(MyArrays.isOneSwapForSorted(ar7));
+	}
+	
+	@Disabled
+	@Test
+	void bubbleSortTest() {
+		//MyArrays.myBubbleSort(new int[] {10,40,30,50,20,60,70});
+		MyArrays.myBubbleSort(new int[] {10,20,30,40,50,60,70});
 	}
 }
