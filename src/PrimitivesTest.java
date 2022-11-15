@@ -136,12 +136,13 @@ class PrimitivesTest {
 		assertArrayEquals(new int[] {10,20,30,40,50,55,60,70}, MyArrays.insertSorted(new int[] {10,20,30,40,50,60,70}, 55));
 	}
 	
-	@Disabled
+	
 	@Test
 	void ArraysSearchTest() {
-		MyArrays.binarySearchDuplicate(new int[] {4, 5, 7, 9, 9, 9, 9, 13, 13, 18, 22, 26, 29, 44, 59}, 9);
+		assertEquals(-16, MyArrays.binarySearchDuplicate(new int[] {4, 5, 7, 9, 9, 9, 9, 13, 13, 18, 22, 26, 29, 44, 59}, 60));
 	}
 
+	@Disabled
 	@Test
 	void isOneSwapTestFalse() {
 		int ar1[] = { 1, 2, 3, 10, -1, 5, 6 };
@@ -160,6 +161,7 @@ class PrimitivesTest {
 		assertFalse(MyArrays.isOneSwapForSorted(ar7));
 	}
 	
+	@Disabled
 	@Test
 	void isOneSwapTestTrue() {
 		int ar1[] = { 10, 2, 3, 4, 1 };
@@ -181,7 +183,6 @@ class PrimitivesTest {
 	@Disabled
 	@Test
 	void bubbleSortTest() {
-		//MyArrays.myBubbleSort(new int[] {10,40,30,50,20,60,70});
-		MyArrays.myBubbleSort(new int[] {10,20,30,40,50,60,70});
+		assertArrayEquals(new int[] {10,20,30,40,50,60,70}, MyArrays.myBubbleSort(new int[] {10,30,20,40,50,70,60}));
 	}
 }

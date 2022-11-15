@@ -89,8 +89,10 @@ public class MyArrays {
 	public static int binarySearchDuplicate(int[] arraySorted, int number) {
 		int left = 0;
 		int right = arraySorted.length - 1;
-		int middle = right / 2;
-		while (left <= right && arraySorted[left] != arraySorted[right] ) {
+		int middle = arraySorted.length / 2; 
+//		int middle = right / 2;
+//		while (left <= right && arraySorted[left] != arraySorted[right] ) {
+		while (left <= right && arraySorted[left] != number ) {
 			if (number <= arraySorted[middle]) {
 				right = middle;
 			}
@@ -99,7 +101,8 @@ public class MyArrays {
 			}
 			middle = (right + left) / 2;
 		}
-		return left > right ? -(left + 1) : left;
+//		return left > right ? -(left + 1) : left;
+		return left < arraySorted.length && arraySorted[left] == number ? left : -(left + 1);
 	}
 	
 	public static boolean isOneSwapForSorted(int[] array) {
@@ -142,24 +145,45 @@ public class MyArrays {
 	}
 	
 	public static int[] myBubbleSort (int[] array) {
-		boolean sortIsDone = false;
-		while (!sortIsDone) {
-			sortIsDone = moveGreaterRight(array);
-		}
+//		boolean sortIsDone = false;
+//		while (!sortIsDone) {
+//			sortIsDone = moveGreaterRight(array);
+//		}
+//		return array;
+		int unsortedLength = array.length;
+		do {
+			unsortedLength = moveGreaterRight(array, unsortedLength - 1); 
+		} while(unsortedLength != 0);
 		return array;
 	}
 	
-	private static boolean moveGreaterRight(int[] array) {
-		boolean isSorted = true;
-		for (int i = 0; i < array.length-1; i++) {
+// private static boolean moveGreaterRight(int[] array) {
+//		boolean isSorted = true;
+//		for (int i = 0; i < array.length-1; i++) {
+//			if (array[i] > array[i+1]) {
+//				isSorted = false;
+//				int bubble = array[i];
+//				array[i] = array[i+1];
+//				array[i+1] = bubble;
+//			}	
+//		}	
+//		return isSorted;
+	private static int moveGreaterRight(int[] array, int length) {
+		int res = 0;
+		for (int i = 0; i < length; i++) {
 			if (array[i] > array[i+1]) {
-				isSorted = false;
-				int bubble = array[i];
-				array[i] = array[i+1];
-				array[i+1] = bubble;
-			}	
-		}	
-		return isSorted;
+				res = i + 1;
+				swap(array, i, i + 1);
+			}
+		}
+		return res;
+	}
+	
+	public static int[] swap(int[] array, int i, int j) {
+			int bubble = array[i];
+			array[i] = array[j];
+			array[j] = bubble;	
+			return array;
 	}
 	
 }
