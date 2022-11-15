@@ -186,4 +186,35 @@ public class MyArrays {
 			return array;
 	}
 	
+	/**
+	 * 
+	 * @param array of short positive numbers
+	 * @param sum
+	 * @return true if array contains two numbers, sun of which equals a given sum
+	 */
+	static public boolean isSum2(short[] array, short sum) {
+		boolean res = false;
+		int[] secondArray = new int[0];
+		int i = 0;
+		do {
+			if (contains(secondArray, array[i])) {
+				res = true;
+			}
+			secondArray = addsNumber(secondArray, sum - array[i]);
+			i++;
+		} while (i < array.length && !res);
+		return res;
+	}
+	
+	public static boolean contains(int[] array, int val) {
+
+        boolean res = false;
+        for(int i = 0; i < array.length; i++){
+            if(array[i] == val){
+            	res = true;
+                break;
+            }
+        }
+        return res;
+    }
 }
