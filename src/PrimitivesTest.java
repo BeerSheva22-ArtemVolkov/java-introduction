@@ -190,9 +190,8 @@ class PrimitivesTest {
 	@Test
 	void isSum2Test() {
 		short[] array = new short[] {1,2,3,4,5,6};
-		assertTrue(MyArrays.isSum2(array, (short)10));
-		array = new short[] {1,2,3,4,5,6};
-		assertFalse(MyArrays.isSum2(array, (short)17));
+		assertTrue(MyArrays.isSum2ByYuri(array, (short)11));
 		array = new short[] {2,4,6,7,8};
+		assertFalse(MyArrays.isSum2ByYuri(array, (short)133));
 	}
 }

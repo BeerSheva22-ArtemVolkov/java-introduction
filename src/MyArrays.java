@@ -206,6 +206,25 @@ public class MyArrays {
 		return res;
 	}
 	
+	static public boolean isSum2ByYuri(short[] array, short sum) {
+		boolean res = false;
+		boolean[] helper = new boolean[sum >= 0 ? sum + 1 : 0x7fff + 1];
+		int index = 0;
+		while(index < array.length && !res) {
+			short diff = (short) (sum - array[index]);
+			if (diff >= 0) {
+				if (helper[diff]) {
+					res = true;
+				}
+				else {
+					helper[array[index]] = true;
+				}
+			}
+			index++;
+		}
+		return res;
+	}
+	
 	public static boolean contains(int[] array, int val) {
 
         boolean res = false;
