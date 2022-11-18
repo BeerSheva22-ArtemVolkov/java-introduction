@@ -27,7 +27,6 @@ public class Strings {
 				arrayHelper[char1[i]] = (char) (arrayHelper[char1[i]] + char1[i]);
 				arrayHelper[char2[i]] = (char) (arrayHelper[char2[i]] - char2[i]);
 			}
-			//System.out.println(Arrays.toString(arrayHelper));
 			res = isNullArray(arrayHelper);
 		}
 		return res; 
