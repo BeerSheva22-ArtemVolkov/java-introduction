@@ -67,7 +67,7 @@ class ObjectTests {
 		assertFalse("$ _".matches(Strings.javaNameExp()) );
 	}
 	
-	@Disabled
+	
 	@Test
 	void octetTest() {
 		assertTrue("255".matches(Strings.ip4Octet()) );	
@@ -86,12 +86,15 @@ class ObjectTests {
 	@Test
 	void ipV4Test() {
 		assertTrue("1.0.0.1".matches(Strings.ipV4()) );	
+		assertTrue("0.0.0.1".matches(Strings.ipV4()) );	
 		assertTrue("0.0.0.0".matches(Strings.ipV4()) );	
 		assertTrue("255.255.255.255".matches(Strings.ipV4()) );	
 		assertTrue("255.255.255.0".matches(Strings.ipV4()) );	
 		assertTrue("255.255.0.0".matches(Strings.ipV4()) );
 		assertTrue("255.0.0.0".matches(Strings.ipV4()) );
+		assertTrue("0.0.0.255".matches(Strings.ipV4()) );
 		assertFalse("256.0.0.0".matches(Strings.ipV4()) );
+		assertFalse("0.0.0.256".matches(Strings.ipV4()) );
 		assertFalse("1".matches(Strings.ipV4()) );
 		assertFalse("256.256.256.256".matches(Strings.ipV4()) );
 	}
