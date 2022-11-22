@@ -44,6 +44,37 @@ public class Strings {
 		return res;
 	}
 	
+	public static boolean isAnagramByYuri(String str1, String str2) {
+		boolean res = false;
+		if (str1.length() == str2.length()) {
+			int[] helper = new int[Byte.MAX_VALUE];
+			res = true;
+			fillHelper(helper, str1);
+			int index = 0;
+			int length = str1.length();
+			while(index < length && res) {
+				int indSymb = str2.charAt(index);
+				if (helper[indSymb] == 0) {
+					res = false;
+				} 
+				else {
+					helper[indSymb]--;
+					index++;
+				}
+			}
+		}		
+		return res;
+	}
+	
+	private static void fillHelper(int[] helper, String str1) {
+		
+		int length = str1.length();
+		for (int i = 0; i < length; i++) {
+			int ind = str1.charAt(i);
+			helper[ind]++;
+		}
+	}
+
 	public static String[] sortStringNumbers(String[] array) {
 		int[] arrayHelper = new int[maxByte * 2];
 		for (int i = 0; i < array.length; i++) {
@@ -59,5 +90,51 @@ public class Strings {
 			}
 		}
 		return array;
+	}
+	
+	public static String[] sortStringNumbersByYuri(String[] array) {
+		int offset = Byte.MAX_VALUE + 1;
+		int[] helper = new int[offset * 2];
+		fillHelper(helper, array, offset);
+		sortFromHelper(array, helper, offset);
+		return array;
+	}
+
+	private static void fillHelper(int[] helper, String[] array, int offset) {
+		for (int i = 0; i < array.length; i++) {
+			int index = getIndexFromString(array[i], offset);
+			helper[index]++;
+		}
+	}
+
+	private static int getIndexFromString(String string, int offset) {
+		int number = Integer.parseInt(string);
+		return number + offset;
+	}
+
+	private static void sortFromHelper(String[] array, int[] helper, int offset) {
+		int arrayInd = 0;
+		for (int i = 0; i < helper.length; i++) {
+			for (int j = 0; j < helper[i]; j++) {
+				array[arrayInd++] = getStringNumberFromIndex(i, offset);
+			}
+		}
+	}
+
+	private static String getStringNumberFromIndex(int index, int offset) {
+		int number = index - offset;
+		return Integer.toString(number);
+	}
+
+	public static String javaNameExp() {
+		return "[a-zA-Z$][\\w$]*|_[\\w$]+";
+	}
+	
+	public static String ip4Octet() {
+		return "25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d";
+	}
+	
+	public static String ipV4() {
+		return "(25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)\\.(25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)\\.(25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)\\.(25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)";
 	}
 }
