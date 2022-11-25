@@ -1,3 +1,6 @@
+package telran.text;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 
 public class Strings {
@@ -141,5 +144,116 @@ public class Strings {
 		return String.format("(%1$s\\.){3}%1$s", octetExp);
 		//return "((25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)\\.){3}(25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)";
 	}
+	
+	/**
+	 * 
+	 * @param expression
+	 * @param values
+	 * @param namesSorted - variable names sorted by strings
+	 * @return computed value of a given expression or Double.NaN 
+	 */
+	public static Double computeArithmeticExpression(String expression, double[] values, String[] names) {
+		Double res = Double.NaN;
+		if (isArithmeticExpression(expression) && checkBraces(expression)) {
+			expression = expression.replaceAll("[\\s()]+", "");
+			String[] operands = expression.split(operator());
+			String[] operators = expression.split(operand());
+			res = getOperandValue(operands[0], values, names);
+			int index = 1;
+			int operatorIndex = 0;
+			while(index < operands.length && !res.isNaN()) {
+				double operandValue = getOperandValue(operands[index], values, names);
+				while (operators[operatorIndex] == "") {
+					operatorIndex++;
+				}
+				res = computeOperation(res, operandValue, operators[operatorIndex]);
+				operatorIndex++;
+				index++;
+			}
+		}
+		return res;
+	}
+	
+	public static boolean isArithmeticExpression(String expression) {
+		expression = expression.replaceAll("\\s+", ""); // заменяет белые символы на пустоту
+		return expression.matches(arithmeticExpression());
+	}
+	
+	private static String arithmeticExpression() {
+		String operatorExp = operator();
+		String operandExp = operand();
+		
+		return String.format("\\(*%1$s(%2$s\\)*\\(*%1$s\\)*)*", operandExp, operatorExp); // %1$s = operandExp, %2$s = operatorExp
+	}
+
+	public static String operand() {
+		return "((\\d+\\.?\\d*|\\.\\d+)|([a-zA-Z]*))";
+	}
+
+	private static String operator() {
+		return "([-+*/])";
+	}
+
+	private static Double computeOperation(Double operand1, double operand2, String operator) {
+		
+		Double res = Double.NaN;
+		if (!Double.isNaN(operand2)) {
+			switch(operator) {
+				case "+": res = operand1 + operand2;
+				break;
+				case "-": res = operand1 - operand2;
+				break;
+				case "/": res = operand1 / operand2;
+				break;
+				case "*": res = operand1 * operand2;
+				break;
+				default: res = Double.NaN;
+			}
+		}
+		return res;
+	}
+
+	public static Double getOperandValue(String operand, double[] values, String[] names) {
+		
+		Double res = null;
+		if (operand.matches("(\\d+\\.?\\d*|\\.\\d+)")){
+			res = Double.parseDouble(operand);
+		}
+		else {
+			int idx = 0;
+			while (res == null) {
+				if (names[idx].equals(operand)) {
+					res = values[idx];
+				}
+				idx++;
+			}
+		}
+		return res;
+	}
+
+	public static boolean checkBraces(String expression) {
+		
+		boolean res = false;
+		int bracesCount = 0, i = 0;
+		while (bracesCount >= 0 && i < expression.length()) {
+			char letter = expression.charAt(i);
+			if (letter == '(') {
+				bracesCount++;
+			}
+			else if(letter == ')'){
+				bracesCount--;
+			}
+			i++;
+		}
+		if (bracesCount == 0) {
+			res = true;
+		}
+		else {
+			res = false;
+		}
+		return res;
+	}
+	
+	
 	
 }

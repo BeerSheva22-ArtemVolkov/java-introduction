@@ -1,7 +1,7 @@
-import static org.junit.jupiter.api.Assertions.*;
+package telran.text;
+import static org.junit.jupiter.api.Assertions.*; // static - позволяет обращение к статическим методам без указания класса
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*; // без static - указание к классу
 
 class ObjectTests {
 
@@ -82,7 +82,7 @@ class ObjectTests {
 		assertFalse("0000".matches(Strings.ip4Octet()) );
 	}
 	
-	
+	@Disabled
 	@Test
 	void ipV4Test() {
 		assertTrue("1.0.0.1".matches(Strings.ipV4()) );	
@@ -95,7 +95,26 @@ class ObjectTests {
 		assertTrue("0.0.0.255".matches(Strings.ipV4()) );
 		assertFalse("256.0.0.0".matches(Strings.ipV4()) );
 		assertFalse("0.0.0.256".matches(Strings.ipV4()) );
+		assertFalse("0.0.255".matches(Strings.ipV4()) );
 		assertFalse("1".matches(Strings.ipV4()) );
 		assertFalse("256.256.256.256".matches(Strings.ipV4()) );
 	}
+	
+	
+	@Test
+	void arithmeticTest() {
+		Double  res = 28.0;
+		assertEquals(res, Strings.computeArithmeticExpression("(a+(2.0+b*4.0))", new double[] {1.0, 4.0}, new String[] {"a", "b"}));
+				res = 16.0;
+		assertEquals(res, Strings.computeArithmeticExpression("(a/(b)+c*4.0)", new double[] {4.0, 4.0, 3.0}, new String[] {"a", "b", "c"}));
+				res = 0.5;
+		assertEquals(res, Strings.computeArithmeticExpression("(a*b+c/4.0-d)", new double[] {2.0, 3.0, 6.0, 2.5}, new String[] {"a", "b", "c", "d"}));
+				res = -4.5;
+		assertEquals(res, Strings.computeArithmeticExpression("(a*b-(c/(2.0-d)))", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"}));
+				res = -4.5;
+		assertEquals(res, Strings.computeArithmeticExpression("(a*b-(c/(2.0-d)))", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"}));
+		assertTrue(Double.isNaN(Strings.computeArithmeticExpression("(a*b-(c/2.0-d)))", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"})));
+		assertTrue(Double.isNaN(Strings.computeArithmeticExpression("()a*b-(c/2.0-d)", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"})));
+		assertTrue(Double.isNaN(Strings.computeArithmeticExpression("a*b(/(2.0-d))", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"})));
+	} 
 }
