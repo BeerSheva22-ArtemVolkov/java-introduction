@@ -85,11 +85,16 @@ public class Strings {
 			arrayHelper[x + maxByte] = arrayHelper[x + maxByte] + 1;
 		}
 		int j = 0;
+//		for (int i = 0; i < arrayHelper.length; i++) {
+//			while (arrayHelper[i] != 0) {
+//				array[j] = Integer.toString(i - maxByte);
+//				arrayHelper[i] = arrayHelper[i] - 1;
+//				j++;
+//			}
+//		}
 		for (int i = 0; i < arrayHelper.length; i++) {
-			while (arrayHelper[i] != 0) {
-				array[j] = Integer.toString(i - maxByte);
-				arrayHelper[i] = arrayHelper[i] - 1;
-				j++;
+			for(int l = 0; l < arrayHelper[i]; l++) {
+				array[j++] = Integer.toString(i - maxByte);
 			}
 		}
 		return array;
@@ -134,15 +139,12 @@ public class Strings {
 	}
 	
 	public static String ip4Octet() {
-		//return "2(5[0-5]|[0-4]\\d)|([01]?\\d\\d?)";
 		return "([01]?\\d\\d?|2([0-4]\\d|5[0-5]))";
-		//return "25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d";
 	}
 	
 	public static String ipV4() {
 		String octetExp = ip4Octet();
 		return String.format("(%1$s\\.){3}%1$s", octetExp);
-		//return "((25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)\\.){3}(25[0-5]|2[0-4]\\d|[01]\\d{1,2}|0{1,3}|\\d{1,2}|0{1,2}\\d)";
 	}
 	
 	/**
@@ -160,14 +162,9 @@ public class Strings {
 			String[] operators = expression.split(operand());
 			res = getOperandValue(operands[0], values, names);
 			int index = 1;
-			int operatorIndex = 0;
 			while(index < operands.length && !res.isNaN()) {
 				double operandValue = getOperandValue(operands[index], values, names);
-				while (operators[operatorIndex] == "") {
-					operatorIndex++;
-				}
-				res = computeOperation(res, operandValue, operators[operatorIndex]);
-				operatorIndex++;
+				res = computeOperation(res, operandValue, operators[index]);
 				index++;
 			}
 		}
@@ -187,7 +184,7 @@ public class Strings {
 	}
 
 	public static String operand() {
-		return "((\\d+\\.?\\d*|\\.\\d+)|([a-zA-Z]*))";
+		return "((\\_+[\\w$]+)|(\\d+\\.?\\d*|\\.\\d+)|([a-zA-Z$]+\\d*))";
 	}
 
 	private static String operator() {
@@ -215,13 +212,13 @@ public class Strings {
 
 	public static Double getOperandValue(String operand, double[] values, String[] names) {
 		
-		Double res = null;
+		Double res = Double.NaN;
 		if (operand.matches("(\\d+\\.?\\d*|\\.\\d+)")){
 			res = Double.parseDouble(operand);
 		}
 		else {
 			int idx = 0;
-			while (res == null) {
+			while (Double.isNaN(res) && idx < names.length) {
 				if (names[idx].equals(operand)) {
 					res = values[idx];
 				}
@@ -247,9 +244,6 @@ public class Strings {
 		}
 		if (bracesCount == 0) {
 			res = true;
-		}
-		else {
-			res = false;
 		}
 		return res;
 	}
