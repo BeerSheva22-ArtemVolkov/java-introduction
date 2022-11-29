@@ -112,7 +112,7 @@ class ObjectTests {
 				res = -4.5;
 		assertEquals(res, Strings.computeArithmeticExpression("(a*b-(c/(2.0-d)))", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"}));
 				res = 20.0;
-		assertEquals(res, Strings.computeArithmeticExpression("$+2-__/$d*10", new  double[]{5, 1, 3}, new String[]{"$", "__", "$d"}));
+		assertEquals(res, Strings.computeArithmeticExpression("$+2-__/$d*10", new  double[]{5, 1, 3}, new String[]{"__", "$", "$d"}));
 		assertTrue(Double.isNaN(Strings.computeArithmeticExpression("(a*b-(c/2.0-d)))", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"})));
 		assertTrue(Double.isNaN(Strings.computeArithmeticExpression("()a*b-(c/2.0-d)", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"})));
 		assertTrue(Double.isNaN(Strings.computeArithmeticExpression("a*b(/(2.0-d))", new double[] {2.0, 2.0, 8.0, 2.5}, new String[] {"a", "b", "c", "d"})));
@@ -120,4 +120,9 @@ class ObjectTests {
 		assertTrue(Double.isNaN(Strings.computeArithmeticExpression("$+2-__/$d*10", new  double[]{5, 1, 3}, new String[]{"$", "___", "$d"})));
 	} 
 	
+	@Disabled
+	@Test
+	void test() {
+		System.out.println("vvvvvvvv".length());
+	}
 }

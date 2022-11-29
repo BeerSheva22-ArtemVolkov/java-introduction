@@ -156,6 +156,8 @@ public class Strings {
 	 */
 	public static Double computeArithmeticExpression(String expression, double[] values, String[] names) {
 		Double res = Double.NaN;
+		names = getUpdatedNames(names);
+		values = getUpdatedValues(values, names);
 		if (isArithmeticExpression(expression) && checkBraces(expression)) {
 			expression = expression.replaceAll("[\\s()]+", "");
 			String[] operands = expression.split(operator());
@@ -171,6 +173,20 @@ public class Strings {
 		return res;
 	}
 	
+	private static double[] getUpdatedValues(double[] values, String[] names) {
+		if (values == null) {
+			values = new double[0];
+		}
+		else if (values.length != names.length) {
+			values = Arrays.copyOf(values, names.length);
+		}
+		return values;		
+	}
+
+	private static String[] getUpdatedNames(String[] names) {
+		return names == null ? new String[0] : names;
+	}
+
 	public static boolean isArithmeticExpression(String expression) {
 		expression = expression.replaceAll("\\s+", ""); // заменяет белые символы на пустоту
 		return expression.matches(arithmeticExpression());
@@ -184,7 +200,13 @@ public class Strings {
 	}
 
 	public static String operand() {
-		return "((\\_+[\\w$]+)|(\\d+\\.?\\d*|\\.\\d+)|([a-zA-Z$]+\\d*))";
+		String numberExp = numberExp();
+		String variableExp = javaNameExp();
+		return String.format("(\\(*(%s|%s)\\)*)", numberExp, variableExp);  //"((\\_+[\\w$]+)|(\\d+\\.?\\d*|\\.\\d+)|([a-zA-Z$]+\\d*))";
+	}
+	
+	private static String numberExp() {
+		return "(\\d+\\.?\\d*|\\.\\d+)";
 	}
 
 	private static String operator() {
@@ -210,19 +232,16 @@ public class Strings {
 		return res;
 	}
 
-	public static Double getOperandValue(String operand, double[] values, String[] names) {
+	private static Double getOperandValue(String operand, double[] values, String[] names) {
 		
 		Double res = Double.NaN;
-		if (operand.matches("(\\d+\\.?\\d*|\\.\\d+)")){
-			res = Double.parseDouble(operand);
+		if (operand.matches(numberExp())){
+			res = Double.valueOf(operand);
 		}
 		else {
-			int idx = 0;
-			while (Double.isNaN(res) && idx < names.length) {
-				if (names[idx].equals(operand)) {
-					res = values[idx];
-				}
-				idx++;
+			int index = Arrays.binarySearch(names, operand);
+			if (index > -1) {
+				res = values[index];
 			}
 		}
 		return res;
@@ -230,9 +249,8 @@ public class Strings {
 
 	public static boolean checkBraces(String expression) {
 		
-		boolean res = false;
-		int bracesCount = 0, i = 0;
-		while (bracesCount >= 0 && i < expression.length()) {
+		int bracesCount = 0, i = 0, expLength = expression.length();
+		while (i < expLength && bracesCount > -1) {
 			char letter = expression.charAt(i);
 			if (letter == '(') {
 				bracesCount++;
@@ -242,10 +260,7 @@ public class Strings {
 			}
 			i++;
 		}
-		if (bracesCount == 0) {
-			res = true;
-		}
-		return res;
+		return bracesCount == 0;
 	}
 	
 	
