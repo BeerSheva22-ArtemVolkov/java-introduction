@@ -1,13 +1,10 @@
 package telran.digital.numbers;
 
-import static telran.digital.numbers.DigitalNumbersPrinting.displayStrings;
-import static telran.digital.numbers.DigitalNumbersPrinting.one;
-
 public class DigitalNumbersPrinting {
 	
 	private static final String SYMBOL = "*";
 
-	// offset - пробел
+	// offset - отсутп от цифры
 	public static void displayDigitalNumber (int number, int offset, int width, int height) {
 		int length = String.valueOf(number).length();
 		String[] res = emptyArray(height);
@@ -62,7 +59,7 @@ public class DigitalNumbersPrinting {
 		int max = 0;
 		for (int i = 0; i < firstArray.length; i++) {
 			max = max < secondArray[i].length() ? secondArray[i].length() : max;
-			res[i] = firstArray[i] + " " + secondArray[i] + " ".repeat(max - secondArray[i].length());
+			res[i] = firstArray[i] + secondArray[i] + " ".repeat(max - secondArray[i].length()) + "".repeat(offset - 1);
 		}
 		return res;
 	}

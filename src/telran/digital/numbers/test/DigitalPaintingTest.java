@@ -87,6 +87,7 @@ public class DigitalPaintingTest {
 	
 	@Test
 	void displayDigitalNumberTest() {
-		displayDigitalNumber(132952, 1, 5, 7);
+		displayDigitalNumber(1234567890, 2, 5, 9);
+		displayDigitalNumber(1087654320, 2, 7, 5);
 	}
 }
